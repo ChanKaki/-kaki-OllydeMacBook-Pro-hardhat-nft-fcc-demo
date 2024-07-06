@@ -8,6 +8,7 @@ const networkConfig = {
     callBackGasLimit: "50000",
     subscriptionId: "10627",
     interval: "30",
+    mintFee: "2000000000000000", // 0.01 ETH
   },
   31337: {
     name: "hardhat",
@@ -17,15 +18,19 @@ const networkConfig = {
     callBackGasLimit: "50000",
     subscriptionId: "588",
     interval: "30",
+    mintFee: "20000000000000000", // 0.01 ETH
   },
 };
 
 const developmentChains = ["hardhat", "localhost"];
 
-const INITIAL_SUPPLY = "1000000000000000000000000";
+const DECIMALS = "18";
+
+const INITIAL_PRICE = "1000000000000000000000000";
 
 module.exports = {
   networkConfig,
   developmentChains,
-  INITIAL_SUPPLY,
+  DECIMALS,
+  INITIAL_PRICE,
 };
