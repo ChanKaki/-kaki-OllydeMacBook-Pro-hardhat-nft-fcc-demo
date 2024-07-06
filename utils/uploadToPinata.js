@@ -30,6 +30,16 @@ async function storeImages(imagesFilePath) {
       console.log(error);
     }
   }
+  return { responses, files };
 }
 
-module.exports = { storeImages };
+async function storeTokenUrlMetadata(metadata) {
+  try {
+    const response = await pinata.pinJSONToIPFS(metadata);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+module.exports = { storeImages, storeTokenUrlMetadata };
