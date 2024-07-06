@@ -22,12 +22,19 @@ const metadataTemplate = {
   ],
 };
 
+  let tokenUris = [
+    "ipfs://QmQ1TowkDu1XLkx1RCFjeuPwEBWCVeCKgcNSHTm9ACERzm",
+    "ipfs://QmeB8x8FNyi8XxLn9aoRk4icKfE6fQahDHJqcjGSnLkeHu",
+    "ipfs://QmZ3bCDzsXrnYaq9ZDvg3iaRtjiM19FxgWCG43p6XY2SpV",
+  ];
+
+  const FUND_AMOUNT = "1000000000000000000000";
+
 module.exports = async function ({ getNamedAccounts, deployments }) {
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
   const chainId = network.config.chainId;
 
-  let tokenUris;
 
   if (process.env.UPDATE_FROD_END == "true") {
     tokenUris = await handleTokenUris();
@@ -42,6 +49,7 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
     const tx = await vrfCoordinatorV2Mock.createSubscription();
     const txReceipt = await tx.wait(1);
     subscriptionId = txReceipt.events[0].args.subId;
+    await vrfCoordinatorV2Mock.fundSubscription(subscriptionId,FUND_AMOUNT);
   } else {
     vrfCoordinatorV2Address = networkConfig[chainId].vrfCoordinatorV2;
     subscriptionId = networkConfig[chainId].subscriptionId;
